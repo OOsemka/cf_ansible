@@ -17,7 +17,7 @@
 #############################################
 
 
-  -  name: create users
+  -  name: delete users
      os_user:
        auth:
          auth_url: "{{ os_auth }}"
@@ -37,7 +37,7 @@
 # Delete OpenStack Projects
 ######################################
 
-  -  name: create projects
+  -  name: delete projects
      os_project:
        auth:
          auth_url: "{{ os_auth }}"
