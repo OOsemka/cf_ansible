@@ -1,0 +1,55 @@
+- name: CFtest create project and user in openstack
+  hosts: localhost
+  gather_facts: false
+  vars:
+    cloud_admin: admin
+    admin_password: Passw0rd
+    admin_project: admin
+    os_auth: https://openstack.home.lab:13000/v2.0
+    project_name: CFtest
+    project_password: Passw0rd
+
+  tasks:
+
+# Create Projects
+######################################3
+
+  -  name: create projects
+     os_project:
+       auth:
+         auth_url: "{{ os_auth }}"
+         username: "{{ cloud_admin }}"
+         password: "{{ admin_password }}"
+         project_name: "{{ admin_project }}"
+       state: present
+       endpoint_type: admin
+       name: "{{ project_name }}"
+       description: "{{ project_name }}"
+       domain_id: "{{ project_name }}"
+       enabled: True
+       validate_certs: False
+     register: new_projects
+
+  #-  debug:
+  #     var: new_projects
+
+# Create Users
+#############################################
+
+
+  -  name: create users
+     os_user:
+       auth:
+         auth_url: "{{ os_auth }}"
+         username: "{{ cloud_admin }}"
+         password: "{{ admin_password }}"
+         project_name: "{{ admin_project }}"
+       state: present
+       endpoint_type: admin
+       name: "{{ project_name }}"
+       password: "{{ project_password }}"
+       domain: "{{ project_name }}"
+       default_project: "{{ project_name }}"
+       validate_certs: False
+     register: new_users
+
