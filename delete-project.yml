@@ -12,11 +12,6 @@
   tasks:
 
 
-
-# Delete Openstack Users
-#############################################
-
-
   -  name: delete users
      os_user:
        auth:
@@ -25,31 +20,24 @@
          password: "{{ admin_password }}"
          project_name: "{{ admin_project }}"
        state: absent
-       endpoint_type: admin
        name: "{{ project_name }}"
        password: "{{ project_password }}"
        domain: "{{ project_name }}"
        default_project: "{{ project_name }}"
        validate_certs: False
-     register: new_users
+       endpoint_type: admin
 
 
-# Delete OpenStack Projects
-######################################
-
-  -  name: delete projects
+  -  name: delete projects  
      os_project:
        auth:
          auth_url: "{{ os_auth }}"
          username: "{{ cloud_admin }}"
          password: "{{ admin_password }}"
          project_name: "{{ admin_project }}"
-       state: absent
-       endpoint_type: admin
-       name: "{{ project_name }}"
-       description: "{{ project_name }}"
-       domain_id: "{{ project_name }}"
-       enabled: True
-       validate_certs: False
-     register: new_projects
 
+       state: absent
+       enabled: True
+       name: "{{ project_name }}"
+       validate_certs: False
+       endpoint_type: admin
